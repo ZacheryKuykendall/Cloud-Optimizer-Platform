@@ -1,0 +1,78 @@
+groups:
+  - name: cloud_optimizer_alerts
+    rules:
+      # Service health alerts
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.job }} is down"
+          description: "Service {{ $labels.job }} has been down for more than 1 minute"
+
+      # Resource usage alerts
+      - alert: HighCPUUsage
+        expr: job:resource_usage:cpu > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.job }}"
+          description: "{{ $labels.job }} has high CPU usage (> 80%) for more than 5 minutes"
+
+      - alert: HighMemoryUsage
+        expr: job:resource_usage:memory / node_memory_MemTotal_bytes > 0.85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage on {{ $labels.job }}"
+          description: "{{ $labels.job }} has high memory usage (> 85%) for more than 5 minutes"
+
+      # Error rate alerts
+      - alert: HighErrorRate
+        expr: job:request_errors:rate5m > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate on {{ $labels.job }}"
+          description: "{{ $labels.job }} has error rate > 5% for more than 5 minutes"
+
+      # Latency alerts
+      - alert: HighLatency
+        expr: job:request_latency_seconds:mean5m > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High latency on {{ $labels.job }}"
+          description: "{{ $labels.job }} has average latency > 1s for more than 5 minutes"
+
+      # Cost alerts
+      - alert: DailyCostSpike
+        expr: increase(total_cloud_costs_usd[24h]) > 1000
+        labels:
+          severity: warning
+        annotations:
+          summary: "Daily cost spike detected"
+          description: "Cloud costs increased by more than $1000 in the last 24 hours"
+
+      - alert: MonthlyBudgetWarning
+        expr: sum(increase(total_cloud_costs_usd[30d])) > monthly_budget_usd * 0.8
+        labels:
+          severity: warning
+        annotations:
+          summary: "Monthly budget warning"
+          description: "Cloud costs have reached 80% of monthly budget"
+
+      # Resource optimization alerts
+      - alert: UnderutilizedResources
+        expr: resource_utilization_percent < 20
+        for: 24h
+        labels:
+          severity: info
+        annotations:
+          summary: "Underutilized resources detected"
+          description: "Resources in {{ $labels.resource_type }} have been underutilized for 24 hours"

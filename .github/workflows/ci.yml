@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
+        node-version: [16.x, 18.x]
+        go-version: [1.19, 1.20]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Python setup
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov black isort mypy
+
+    - name: Run Python tests
+      run: |
+        pytest --cov=./ --cov-report=xml
+        black . --check
+        isort . --check
+        mypy .
+
+    # Node.js setup
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Install Node.js dependencies
+      run: |
+        cd cost-dashboard
+        npm ci
+        
+    - name: Run Node.js tests
+      run: |
+        cd cost-dashboard
+        npm run test
+        npm run lint
+        npm run type-check
+
+    # Go setup
+    - name: Set up Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go-version }}
+        
+    - name: Run Go tests
+      run: |
+        cd terraform-provider-cloudoptimizer
+        go test ./...
+        go vet ./...
+        
+    - name: Build Go binaries
+      run: |
+        cd terraform-provider-cloudoptimizer
+        go build -v ./...
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Run security scan
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        command: monitor
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+    - name: Build and push Docker images
+      run: |
+        docker-compose build
+        docker-compose push
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+        
+    - name: Deploy to ECS
+      run: |
+        aws ecs update-service --cluster production --service cloud-optimizer --force-new-deployment
+
+    - name: Notify deployment
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: 'deployments'
+        slack-message: 'Deployment completed for cloud-optimizer-platform :rocket:'
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

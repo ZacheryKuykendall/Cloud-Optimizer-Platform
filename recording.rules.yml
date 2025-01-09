@@ -1,0 +1,23 @@
+groups:
+  - name: cloud_optimizer_recording_rules
+    interval: 5m
+    rules:
+      - record: job:request_latency_seconds:mean5m
+        expr: rate(request_latency_seconds_sum[5m]) / rate(request_latency_seconds_count[5m])
+        labels:
+          team: cloud-optimizer
+
+      - record: job:request_errors:rate5m
+        expr: rate(request_errors_total[5m])
+        labels:
+          team: cloud-optimizer
+
+      - record: job:resource_usage:cpu
+        expr: rate(process_cpu_seconds_total[5m])
+        labels:
+          team: cloud-optimizer
+
+      - record: job:resource_usage:memory
+        expr: process_resident_memory_bytes
+        labels:
+          team: cloud-optimizer

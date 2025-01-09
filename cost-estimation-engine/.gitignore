@@ -1,0 +1,188 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+estimation_logs/
+training_logs/
+prediction_logs/
+
+# Environment variables
+.env
+.env.*
+
+# Machine Learning
+models/
+*.pkl
+*.joblib
+*.h5
+*.model
+*.onnx
+*.pt
+*.pth
+*.tfmodel
+*.keras
+checkpoints/
+tensorboard/
+mlruns/
+wandb/
+
+# Data
+data/
+datasets/
+raw_data/
+processed_data/
+training_data/
+validation_data/
+test_data/
+*.csv
+*.parquet
+*.json
+!package.json
+*.jsonl
+*.arrow
+*.feather
+*.hdf5
+*.h5
+*.npz
+*.npy
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Cost Data
+cost_data/
+pricing_data/
+historical_costs/
+predictions/
+estimates/
+*.cost
+*.price
+*.estimate
+
+# Model Artifacts
+artifacts/
+saved_models/
+model_registry/
+feature_store/
+*.weights
+*.bias
+*.params
+*.meta
+*.index
+
+# Performance Profiles
+prof/
+*.prof
+*.profile
+*.stats
+
+# Documentation
+docs/_build/
+docs/generated/
+api_docs/
+*.pdf
+*.docx
+*.pptx
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Cloud Provider Specific
+# AWS
+.aws/
+aws_credentials/
+*.aws
+
+# Azure
+.azure/
+azure_credentials/
+*.azure
+
+# GCP
+.gcp/
+gcp_credentials/
+*.gcp
+
+# Credentials and Secrets
+credentials/
+secrets/
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Local Development
+local_settings.py
+instance/
+.instance/
+
+# Test Configuration
+test_config.json
+test_credentials.json
+
+# Generated Files
+generated/
+*.generated.*
+
+# Backup Files
+backup/
+*.backup
+
+# System Files
+.DS_Store
+Thumbs.db

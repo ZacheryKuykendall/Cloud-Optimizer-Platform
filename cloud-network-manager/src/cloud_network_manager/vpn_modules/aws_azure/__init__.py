@@ -1,0 +1,120 @@
+"""AWS-Azure VPN module.
+
+This module provides functionality for establishing and managing Site-to-Site VPN
+connections between AWS Virtual Private Gateways and Azure Virtual Network Gateways.
+"""
+
+from cloud_network_manager.vpn_modules.aws_azure.aws_client import AwsVpnClient
+from cloud_network_manager.vpn_modules.aws_azure.azure_client import AzureVpnClient
+from cloud_network_manager.vpn_modules.aws_azure.exceptions import (
+    AuthenticationError,
+    AwsError,
+    AzureError,
+    BgpConfigurationError,
+    BgpError,
+    BgpOperationError,
+    MonitoringError,
+    ProviderError,
+    RouteConfigurationError,
+    RouteError,
+    RouteOperationError,
+    TunnelConfigurationError,
+    TunnelError,
+    TunnelOperationError,
+    ValidationError,
+    VpnConnectionCreationError,
+    VpnConnectionDeletionError,
+    VpnConnectionError,
+    VpnConnectionNotFoundError,
+    VpnConnectionUpdateError,
+    VpnError,
+    VpnGatewayCreationError,
+    VpnGatewayDeletionError,
+    VpnGatewayError,
+    VpnGatewayNotFoundError,
+)
+from cloud_network_manager.vpn_modules.aws_azure.manager import AwsAzureVpnManager
+from cloud_network_manager.vpn_modules.aws_azure.models import (
+    AwsVpnGateway,
+    AzureVNetGateway,
+    BgpConfig,
+    DhGroup,
+    IkeConfig,
+    IkeEncryption,
+    IkeIntegrity,
+    IkeVersion,
+    IpsecConfig,
+    IpsecEncryption,
+    IpsecIntegrity,
+    PfsGroup,
+    RouteEntry,
+    TunnelConfig,
+    TunnelMonitoring,
+    TunnelProtocol,
+    TunnelStatus,
+    VpnConnection,
+    VpnConnectionQuery,
+    VpnConnectionSummary,
+    VpnStatus,
+    VpnType,
+)
+
+__all__ = [
+    # Main classes
+    "AwsVpnClient",
+    "AzureVpnClient",
+    "AwsAzureVpnManager",
+    
+    # Models
+    "AwsVpnGateway",
+    "AzureVNetGateway",
+    "BgpConfig",
+    "DhGroup",
+    "IkeConfig",
+    "IkeEncryption",
+    "IkeIntegrity",
+    "IkeVersion",
+    "IpsecConfig",
+    "IpsecEncryption",
+    "IpsecIntegrity",
+    "PfsGroup",
+    "RouteEntry",
+    "TunnelConfig",
+    "TunnelMonitoring",
+    "TunnelProtocol",
+    "TunnelStatus",
+    "VpnConnection",
+    "VpnConnectionQuery",
+    "VpnConnectionSummary",
+    "VpnStatus",
+    "VpnType",
+    
+    # Exceptions
+    "AuthenticationError",
+    "AwsError",
+    "AzureError",
+    "BgpConfigurationError",
+    "BgpError",
+    "BgpOperationError",
+    "MonitoringError",
+    "ProviderError",
+    "RouteConfigurationError",
+    "RouteError",
+    "RouteOperationError",
+    "TunnelConfigurationError",
+    "TunnelError",
+    "TunnelOperationError",
+    "ValidationError",
+    "VpnConnectionCreationError",
+    "VpnConnectionDeletionError",
+    "VpnConnectionError",
+    "VpnConnectionNotFoundError",
+    "VpnConnectionUpdateError",
+    "VpnError",
+    "VpnGatewayCreationError",
+    "VpnGatewayDeletionError",
+    "VpnGatewayError",
+    "VpnGatewayNotFoundError",
+]
+
+__version__ = "0.1.0"

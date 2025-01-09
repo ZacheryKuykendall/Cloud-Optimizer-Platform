@@ -1,0 +1,114 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.*
+
+# Terraform
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.backup
+terraform.tfplan
+*.plan
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Cloud Provider Specific
+# AWS
+.aws/
+aws.json
+aws_credentials
+
+# Azure
+.azure/
+azure.json
+azure_credentials
+
+# GCP
+.gcp/
+gcp.json
+google_credentials.json
+*.json.key
+
+# Documentation
+docs/_build/
+docs/generated/
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Network Configuration
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+vpn_config/
+*.ovpn

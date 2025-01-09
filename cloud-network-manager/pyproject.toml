@@ -1,0 +1,159 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cloud-network-manager"
+version = "0.1.0"
+description = "A Python library for managing cloud networks and VPN connections across multiple cloud providers"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = [
+    "cloud",
+    "network",
+    "vpn",
+    "aws",
+    "azure",
+    "gcp",
+    "multi-cloud",
+    "networking",
+]
+authors = [
+    { name = "Your Name", email = "your.email@example.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Systems Administration",
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "boto3>=1.26.0",
+    "azure-mgmt-network>=19.0.0",
+    "azure-identity>=1.12.0",
+    "google-cloud-compute>=2.0.0",
+    "google-auth>=2.0.0",
+    "rich>=13.0.0",
+    "aiohttp>=3.8.0",
+    "asyncio>=3.4.3",
+    "ipaddress>=1.0.23",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=22.0.0",
+    "isort>=5.0.0",
+    "mypy>=1.0.0",
+    "pylint>=2.15.0",
+    "types-boto3",
+    "types-aiohttp",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/cloud-network-manager"
+Documentation = "https://github.com/yourusername/cloud-network-manager#readme"
+Repository = "https://github.com/yourusername/cloud-network-manager.git"
+Issues = "https://github.com/yourusername/cloud-network-manager/issues"
+Changelog = "https://github.com/yourusername/cloud-network-manager/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cloud_network_manager"]
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = [
+    "boto3.*",
+    "azure.*",
+    "google.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --cov=src --cov-report=term-missing"
+testpaths = [
+    "tests",
+]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError",
+]
+ignore_errors = true
+omit = [
+    "tests/*",
+    "setup.py",
+]
+
+[tool.pylint.messages_control]
+disable = [
+    "C0111",  # missing-docstring
+    "C0103",  # invalid-name
+    "C0330",  # bad-continuation
+    "C0326",  # bad-whitespace
+    "W0621",  # redefined-outer-name
+    "W0511",  # fixme
+    "R0903",  # too-few-public-methods
+    "R0913",  # too-many-arguments
+    "R0914",  # too-many-locals
+]
+
+[tool.pylint.format]
+max-line-length = 88
+
+[tool.pylint.basic]
+good-names = [
+    "i",
+    "j",
+    "k",
+    "ex",
+    "Run",
+    "_",
+    "fp",
+    "id",
+]

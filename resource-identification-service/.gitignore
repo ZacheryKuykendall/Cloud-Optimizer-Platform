@@ -1,0 +1,167 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+scan_logs/
+provider_logs/
+
+# Environment variables
+.env
+.env.*
+
+# Cloud Provider Credentials
+credentials/
+.aws/
+.azure/
+.gcp/
+*.credentials
+*.config
+*.json
+!package.json
+!tsconfig.json
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Resource Scan Results
+scans/
+results/
+reports/
+*.scan
+*.report
+*.snapshot
+
+# Graph Data
+graphs/
+*.graphml
+*.gexf
+*.gml
+*.dot
+
+# Machine Learning
+models/
+*.pkl
+*.joblib
+*.h5
+*.model
+
+# Documentation
+docs/_build/
+docs/generated/
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Provider Specific
+# AWS
+aws_resources/
+*.aws
+
+# Azure
+azure_resources/
+*.azure
+
+# GCP
+gcp_resources/
+*.gcp
+
+# Resource Classification
+classifications/
+rules/
+*.rules
+*.classification
+
+# Dependency Analysis
+dependencies/
+*.deps
+*.graph
+
+# Metrics and Analytics
+metrics/
+analytics/
+*.metrics
+*.stats
+
+# API Response Recordings
+tests/cassettes/
+*.yaml
+*.yml
+!pytest.ini
+
+# Local Development
+local_settings.py
+instance/
+.instance/
+
+# Test Configuration
+test_config.json
+test_credentials.json
+
+# Resource Cache
+cache/
+*.cache
+
+# Performance Profiles
+prof/
+*.prof
+*.profile
+*.stats
+
+# Generated Files
+generated/
+*.generated.*
+
+# Backup Files
+backup/
+*.backup

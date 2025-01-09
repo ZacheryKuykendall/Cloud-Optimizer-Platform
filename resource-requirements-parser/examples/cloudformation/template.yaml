@@ -1,0 +1,272 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Example infrastructure demonstrating various resource types
+
+Parameters:
+  Environment:
+    Type: String
+    Default: development
+    AllowedValues:
+      - development
+      - staging
+      - production
+    Description: Environment name for resource tagging
+
+  VpcCidr:
+    Type: String
+    Default: 10.0.0.0/16
+    Description: CIDR block for VPC
+
+  PublicSubnetCidr:
+    Type: String
+    Default: 10.0.1.0/24
+    Description: CIDR block for public subnet
+
+  PrivateSubnetCidr:
+    Type: String
+    Default: 10.0.2.0/24
+    Description: CIDR block for private subnet
+
+  WebInstanceType:
+    Type: String
+    Default: t3.micro
+    Description: Instance type for web server
+
+  AppInstanceType:
+    Type: String
+    Default: t3.small
+    Description: Instance type for application server
+
+  DbInstanceType:
+    Type: String
+    Default: db.t3.small
+    Description: Instance type for database
+
+  DbAllocatedStorage:
+    Type: Number
+    Default: 50
+    Description: Allocated storage for database (GB)
+
+  DbUsername:
+    Type: String
+    Default: admin
+    Description: Username for database
+    NoEcho: true
+
+  DbPassword:
+    Type: String
+    Default: change-me-in-production
+    Description: Password for database
+    NoEcho: true
+
+Resources:
+  # VPC and Network Resources
+  MainVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCidr
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-vpc
+        - Key: Environment
+          Value: !Ref Environment
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MainVPC
+      CidrBlock: !Ref PublicSubnetCidr
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-public-subnet
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Type
+          Value: Public
+
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MainVPC
+      CidrBlock: !Ref PrivateSubnetCidr
+      AvailabilityZone: !Select [1, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-private-subnet
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Type
+          Value: Private
+
+  # Compute Resources
+  WebServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref WebInstanceType
+      ImageId: ami-0c55b159cbfafe1f0  # Amazon Linux 2 AMI
+      SubnetId: !Ref PublicSubnet
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 20
+            VolumeType: gp3
+            Encrypted: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-web-server
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Role
+          Value: Web
+
+  AppServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref AppInstanceType
+      ImageId: ami-0c55b159cbfafe1f0  # Amazon Linux 2 AMI
+      SubnetId: !Ref PrivateSubnet
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+            Encrypted: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-app-server
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Role
+          Value: Application
+
+  # Storage Resources
+  DataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${Environment}-data-bucket
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-data-bucket
+        - Key: Environment
+          Value: !Ref Environment
+
+  AppDataVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      AvailabilityZone: !Select [1, !GetAZs '']
+      Size: 100
+      VolumeType: gp3
+      Encrypted: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-app-data
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Database Resources
+  DatabaseInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: !Sub ${Environment}-db
+      Engine: mysql
+      EngineVersion: 8.0
+      DBInstanceClass: !Ref DbInstanceType
+      AllocatedStorage: !Ref DbAllocatedStorage
+      StorageType: gp3
+      StorageEncrypted: true
+      MultiAZ: !Equals [!Ref Environment, production]
+      DBName: appdb
+      MasterUsername: !Ref DbUsername
+      MasterUserPassword: !Ref DbPassword
+      BackupRetentionPeriod: 7
+      VPCSecurityGroups:
+        - !Ref DatabaseSecurityGroup
+      DBSubnetGroupName: !Ref DatabaseSubnetGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-database
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Security Groups
+  WebSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for web servers
+      VpcId: !Ref MainVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-web-sg
+        - Key: Environment
+          Value: !Ref Environment
+
+  AppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for application servers
+      VpcId: !Ref MainVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          SourceSecurityGroupId: !Ref WebSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-app-sg
+        - Key: Environment
+          Value: !Ref Environment
+
+  DatabaseSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for database
+      VpcId: !Ref MainVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref AppSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-db-sg
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Database Subnet Group
+  DatabaseSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for database
+      SubnetIds:
+        - !Ref PrivateSubnet
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-db-subnet-group
+        - Key: Environment
+          Value: !Ref Environment
+
+Outputs:
+  VpcId:
+    Description: VPC ID
+    Value: !Ref MainVPC
+
+  WebServerPublicIP:
+    Description: Public IP of web server
+    Value: !GetAtt WebServer.PublicIp
+
+  DatabaseEndpoint:
+    Description: Database endpoint
+    Value: !GetAtt DatabaseInstance.Endpoint.Address

@@ -1,0 +1,331 @@
+openapi: 3.0.0
+info:
+  title: Cloud Optimizer API
+  description: API for cloud resource optimization and cost management
+  version: 1.0.0
+  contact:
+    name: Cloud Optimizer Team
+    url: https://github.com/your-org/cloud-optimizer
+    email: support@cloudoptimizer.example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+  - url: https://api.cloudoptimizer.example.com
+    description: Production server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+        details:
+          type: object
+          description: Additional error details
+
+    CostAnalysis:
+      type: object
+      properties:
+        total_cost:
+          type: number
+          format: float
+          description: Total cost for the period
+        currency:
+          type: string
+          description: Currency code (e.g., USD)
+        period_start:
+          type: string
+          format: date-time
+        period_end:
+          type: string
+          format: date-time
+        breakdown:
+          type: object
+          properties:
+            by_service:
+              type: object
+              additionalProperties:
+                type: number
+            by_region:
+              type: object
+              additionalProperties:
+                type: number
+            by_tag:
+              type: object
+              additionalProperties:
+                type: number
+
+    OptimizationRecommendation:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [cost, performance, security]
+        priority:
+          type: string
+          enum: [high, medium, low]
+        description:
+          type: string
+        estimated_savings:
+          type: number
+          format: float
+        implementation_effort:
+          type: string
+          enum: [easy, medium, complex]
+        details:
+          type: object
+
+    ResourceDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        provider:
+          type: string
+        region:
+          type: string
+        tags:
+          type: object
+          additionalProperties:
+            type: string
+        cost:
+          type: number
+          format: float
+        metrics:
+          type: object
+          additionalProperties:
+            type: number
+
+security:
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  time:
+                    type: string
+                    format: date-time
+
+  /api/v1/costs:
+    get:
+      summary: Get cost analysis
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: provider
+          in: query
+          schema:
+            type: string
+        - name: region
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cost analysis retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostAnalysis'
+        '400':
+          description: Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/optimize/analyze:
+    post:
+      summary: Analyze resources for optimization opportunities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resource_ids:
+                  type: array
+                  items:
+                    type: string
+                analysis_types:
+                  type: array
+                  items:
+                    type: string
+                    enum: [cost, performance, security]
+      responses:
+        '200':
+          description: Analysis completed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OptimizationRecommendation'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/resources:
+    get:
+      summary: List resources
+      parameters:
+        - name: provider
+          in: query
+          schema:
+            type: string
+        - name: region
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            type: string
+        - name: tag
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Resources retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceDetails'
+        '400':
+          description: Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/resources/{id}:
+    get:
+      summary: Get resource details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Resource details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceDetails'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/providers:
+    get:
+      summary: List connected cloud providers
+      responses:
+        '200':
+          description: Providers retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    status:
+                      type: string
+                    regions:
+                      type: array
+                      items:
+                        type: string
+
+  /api/v1/providers/{provider}/connect:
+    post:
+      summary: Connect to a cloud provider
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                credentials:
+                  type: object
+                  description: Provider-specific credentials
+      responses:
+        '200':
+          description: Provider connected successfully
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

@@ -1,0 +1,99 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cost-data-storage-service"
+version = "0.1.0"
+description = "A service for storing and managing cloud cost data with support for multiple storage backends and data formats"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = ["cloud", "cost", "storage", "database", "finops"]
+authors = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "sqlalchemy>=2.0.0",         # Database ORM
+    "alembic>=1.11.0",          # Database migrations
+    "psycopg2-binary>=2.9.0",   # PostgreSQL adapter
+    "pymongo>=4.5.0",           # MongoDB client
+    "redis>=4.5.0",             # Redis client
+    "clickhouse-driver>=0.2.0", # ClickHouse client
+    "pydantic>=2.0.0",          # Data validation
+    "fastapi>=0.95.0",          # API framework
+    "uvicorn>=0.21.0",          # ASGI server
+    "pandas>=1.5.0",            # Data manipulation
+    "pyarrow>=12.0.0",          # Apache Arrow/Parquet support
+    "duckdb>=0.8.0",           # DuckDB for analytics
+    "python-dateutil>=2.8.2",   # Date utilities
+    "tenacity>=8.0.1",          # Retry handling
+    "httpx>=0.23.0",           # HTTP client
+    "aiohttp>=3.8.0",          # Async HTTP client
+    "prometheus-client>=0.16.0", # Metrics
+    "opentelemetry-api>=1.18.0", # Telemetry
+    "opentelemetry-sdk>=1.18.0", # Telemetry
+    "minio>=7.1.0",            # S3-compatible storage
+    "azure-storage-blob>=12.0.0", # Azure Blob Storage
+    "google-cloud-storage>=2.0.0", # GCS
+    "boto3>=1.26.0",           # AWS S3
+    "elasticsearch>=8.0.0",     # Elasticsearch client
+    "cassandra-driver>=3.28.0", # Cassandra client
+    "influxdb-client>=1.36.0",  # InfluxDB client
+    "timescaledb>=0.1.0",      # TimescaleDB adapter
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.10.0",
+    "black>=22.0.0",
+    "isort>=5.0.0",
+    "mypy>=1.0.0",
+    "pylint>=2.15.0",
+    "pytest-docker>=1.0.0",    # Docker containers for testing
+    "docker>=6.1.0",          # Docker SDK
+    "locust>=2.15.0",         # Load testing
+    "faker>=18.0.0",          # Test data generation
+]
+
+[project.scripts]
+coststorage = "cost_storage.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra -q --cov=src"
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pylint.messages_control]
+disable = ["C0111", "C0103"]
+
+[tool.pylint.format]
+max-line-length = 88

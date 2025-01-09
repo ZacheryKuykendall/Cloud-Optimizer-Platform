@@ -1,0 +1,168 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+comparison_logs/
+performance_logs/
+pricing_logs/
+
+# Environment variables
+.env
+.env.*
+
+# Cloud Provider Credentials
+credentials/
+.aws/
+.azure/
+.gcp/
+.oracle/
+.alibaba/
+*.credentials
+*.config
+*.json
+!package.json
+!tsconfig.json
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# VM Comparison Data
+comparisons/
+pricing_data/
+performance_data/
+benchmarks/
+*.comparison
+*.pricing
+*.benchmark
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.psql
+
+# Redis
+dump.rdb
+*.rdb
+
+# Performance Profiles
+prof/
+*.prof
+*.profile
+*.stats
+
+# Documentation
+docs/_build/
+docs/generated/
+api_docs/
+*.pdf
+*.docx
+*.pptx
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Provider Specific
+# AWS
+aws_instances/
+*.aws
+
+# Azure
+azure_instances/
+*.azure
+
+# GCP
+gcp_instances/
+*.gcp
+
+# Oracle
+oracle_instances/
+*.oracle
+
+# Alibaba
+alibaba_instances/
+*.alibaba
+
+# Metrics and Analytics
+metrics/
+analytics/
+*.metrics
+*.stats
+
+# API Response Recordings
+tests/cassettes/
+*.yaml
+*.yml
+!pytest.ini
+
+# Local Development
+local_settings.py
+instance/
+.instance/
+
+# Test Configuration
+test_config.json
+test_credentials.json
+
+# Generated Files
+generated/
+*.generated.*
+
+# Backup Files
+backup/
+*.backup
+
+# System Files
+.DS_Store
+Thumbs.db

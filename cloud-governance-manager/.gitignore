@@ -1,0 +1,131 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+governance_logs/
+audit_logs/
+
+# Environment variables
+.env
+.env.*
+
+# Cloud Provider Credentials
+# AWS
+.aws/
+aws.json
+aws_credentials
+credentials.csv
+
+# Azure
+.azure/
+azure.json
+azure_credentials
+*.publishsettings
+
+# GCP
+.gcp/
+gcp.json
+google_credentials.json
+*.json.key
+
+# Documentation
+docs/_build/
+docs/generated/
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+migrations/
+
+# Governance Data
+governance_data/
+policies/
+roles/
+*.dump
+*.snapshot
+evidence/
+
+# Reports and Analytics
+reports/
+analytics/
+metrics/
+*.csv
+*.xlsx
+*.parquet
+
+# Audit Data
+audit_reports/
+audit_evidence/
+*.audit
+*.evidence
+
+# Policy Definitions
+policies/
+templates/
+rules/
+*.policy
+*.template
+*.rule

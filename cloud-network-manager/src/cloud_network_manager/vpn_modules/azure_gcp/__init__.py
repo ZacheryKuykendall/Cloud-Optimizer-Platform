@@ -1,0 +1,120 @@
+"""Azure-GCP VPN module.
+
+This module provides functionality for establishing and managing Site-to-Site VPN
+connections between Azure Virtual Network Gateways and Google Cloud VPN Gateways.
+"""
+
+from cloud_network_manager.vpn_modules.azure_gcp.azure_client import AzureVpnClient
+from cloud_network_manager.vpn_modules.azure_gcp.gcp_client import GcpVpnClient
+from cloud_network_manager.vpn_modules.azure_gcp.exceptions import (
+    AuthenticationError,
+    AzureError,
+    GcpError,
+    BgpConfigurationError,
+    BgpError,
+    BgpOperationError,
+    MonitoringError,
+    ProviderError,
+    RouteConfigurationError,
+    RouteError,
+    RouteOperationError,
+    TunnelConfigurationError,
+    TunnelError,
+    TunnelOperationError,
+    ValidationError,
+    VpnConnectionCreationError,
+    VpnConnectionDeletionError,
+    VpnConnectionError,
+    VpnConnectionNotFoundError,
+    VpnConnectionUpdateError,
+    VpnError,
+    VpnGatewayCreationError,
+    VpnGatewayDeletionError,
+    VpnGatewayError,
+    VpnGatewayNotFoundError,
+)
+from cloud_network_manager.vpn_modules.azure_gcp.manager import AzureGcpVpnManager
+from cloud_network_manager.vpn_modules.azure_gcp.models import (
+    AzureVNetGateway,
+    GcpVpnGateway,
+    BgpConfig,
+    DhGroup,
+    IkeConfig,
+    IkeEncryption,
+    IkeIntegrity,
+    IkeVersion,
+    IpsecConfig,
+    IpsecEncryption,
+    IpsecIntegrity,
+    PfsGroup,
+    RouteEntry,
+    TunnelConfig,
+    TunnelMonitoring,
+    TunnelProtocol,
+    TunnelStatus,
+    VpnConnection,
+    VpnConnectionQuery,
+    VpnConnectionSummary,
+    VpnStatus,
+    VpnType,
+)
+
+__all__ = [
+    # Main classes
+    "AzureVpnClient",
+    "GcpVpnClient",
+    "AzureGcpVpnManager",
+    
+    # Models
+    "AzureVNetGateway",
+    "GcpVpnGateway",
+    "BgpConfig",
+    "DhGroup",
+    "IkeConfig",
+    "IkeEncryption",
+    "IkeIntegrity",
+    "IkeVersion",
+    "IpsecConfig",
+    "IpsecEncryption",
+    "IpsecIntegrity",
+    "PfsGroup",
+    "RouteEntry",
+    "TunnelConfig",
+    "TunnelMonitoring",
+    "TunnelProtocol",
+    "TunnelStatus",
+    "VpnConnection",
+    "VpnConnectionQuery",
+    "VpnConnectionSummary",
+    "VpnStatus",
+    "VpnType",
+    
+    # Exceptions
+    "AuthenticationError",
+    "AzureError",
+    "GcpError",
+    "BgpConfigurationError",
+    "BgpError",
+    "BgpOperationError",
+    "MonitoringError",
+    "ProviderError",
+    "RouteConfigurationError",
+    "RouteError",
+    "RouteOperationError",
+    "TunnelConfigurationError",
+    "TunnelError",
+    "TunnelOperationError",
+    "ValidationError",
+    "VpnConnectionCreationError",
+    "VpnConnectionDeletionError",
+    "VpnConnectionError",
+    "VpnConnectionNotFoundError",
+    "VpnConnectionUpdateError",
+    "VpnError",
+    "VpnGatewayCreationError",
+    "VpnGatewayDeletionError",
+    "VpnGatewayError",
+    "VpnGatewayNotFoundError",
+]
+
+__version__ = "0.1.0"

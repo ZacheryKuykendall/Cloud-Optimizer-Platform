@@ -1,0 +1,121 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+cost_logs/
+azure_logs/
+
+# Environment variables
+.env
+.env.*
+
+# Azure Credentials
+.azure/
+azure.json
+azure_credentials
+*.publishsettings
+azureauth.json
+*.azureauth
+
+# Documentation
+docs/_build/
+docs/generated/
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Cost Data
+cost_data/
+*.dump
+*.snapshot
+analysis_data/
+
+# Reports and Analytics
+reports/
+analytics/
+forecasts/
+*.csv
+*.xlsx
+*.parquet
+
+# API Response Recordings
+tests/cassettes/
+*.yaml
+*.yml
+!pytest.ini
+
+# Credentials and Secrets
+credentials/
+secrets/
+*.key
+*.pem
+*.crt
+*.cer
+
+# Local Development
+local_settings.py
+instance/
+.instance/
+
+# Test Configuration
+test_config.json
+test_credentials.json

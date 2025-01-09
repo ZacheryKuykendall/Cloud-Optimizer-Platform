@@ -1,0 +1,120 @@
+"""AWS-GCP VPN module.
+
+This module provides functionality for establishing and managing Site-to-Site VPN
+connections between AWS Virtual Private Gateways and Google Cloud VPN Gateways.
+"""
+
+from cloud_network_manager.vpn_modules.aws_gcp.aws_client import AwsVpnClient
+from cloud_network_manager.vpn_modules.aws_gcp.gcp_client import GcpVpnClient
+from cloud_network_manager.vpn_modules.aws_gcp.exceptions import (
+    AuthenticationError,
+    AwsError,
+    GcpError,
+    BgpConfigurationError,
+    BgpError,
+    BgpOperationError,
+    MonitoringError,
+    ProviderError,
+    RouteConfigurationError,
+    RouteError,
+    RouteOperationError,
+    TunnelConfigurationError,
+    TunnelError,
+    TunnelOperationError,
+    ValidationError,
+    VpnConnectionCreationError,
+    VpnConnectionDeletionError,
+    VpnConnectionError,
+    VpnConnectionNotFoundError,
+    VpnConnectionUpdateError,
+    VpnError,
+    VpnGatewayCreationError,
+    VpnGatewayDeletionError,
+    VpnGatewayError,
+    VpnGatewayNotFoundError,
+)
+from cloud_network_manager.vpn_modules.aws_gcp.manager import AwsGcpVpnManager
+from cloud_network_manager.vpn_modules.aws_gcp.models import (
+    AwsVpnGateway,
+    GcpVpnGateway,
+    BgpConfig,
+    DhGroup,
+    IkeConfig,
+    IkeEncryption,
+    IkeIntegrity,
+    IkeVersion,
+    IpsecConfig,
+    IpsecEncryption,
+    IpsecIntegrity,
+    PfsGroup,
+    RouteEntry,
+    TunnelConfig,
+    TunnelMonitoring,
+    TunnelProtocol,
+    TunnelStatus,
+    VpnConnection,
+    VpnConnectionQuery,
+    VpnConnectionSummary,
+    VpnStatus,
+    VpnType,
+)
+
+__all__ = [
+    # Main classes
+    "AwsVpnClient",
+    "GcpVpnClient",
+    "AwsGcpVpnManager",
+    
+    # Models
+    "AwsVpnGateway",
+    "GcpVpnGateway",
+    "BgpConfig",
+    "DhGroup",
+    "IkeConfig",
+    "IkeEncryption",
+    "IkeIntegrity",
+    "IkeVersion",
+    "IpsecConfig",
+    "IpsecEncryption",
+    "IpsecIntegrity",
+    "PfsGroup",
+    "RouteEntry",
+    "TunnelConfig",
+    "TunnelMonitoring",
+    "TunnelProtocol",
+    "TunnelStatus",
+    "VpnConnection",
+    "VpnConnectionQuery",
+    "VpnConnectionSummary",
+    "VpnStatus",
+    "VpnType",
+    
+    # Exceptions
+    "AuthenticationError",
+    "AwsError",
+    "GcpError",
+    "BgpConfigurationError",
+    "BgpError",
+    "BgpOperationError",
+    "MonitoringError",
+    "ProviderError",
+    "RouteConfigurationError",
+    "RouteError",
+    "RouteOperationError",
+    "TunnelConfigurationError",
+    "TunnelError",
+    "TunnelOperationError",
+    "ValidationError",
+    "VpnConnectionCreationError",
+    "VpnConnectionDeletionError",
+    "VpnConnectionError",
+    "VpnConnectionNotFoundError",
+    "VpnConnectionUpdateError",
+    "VpnError",
+    "VpnGatewayCreationError",
+    "VpnGatewayDeletionError",
+    "VpnGatewayError",
+    "VpnGatewayNotFoundError",
+]
+
+__version__ = "0.1.0"

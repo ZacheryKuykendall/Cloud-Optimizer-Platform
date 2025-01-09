@@ -1,0 +1,164 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+storage_logs/
+db_logs/
+
+# Environment variables
+.env
+.env.*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.rdb
+*.pdb
+*.duckdb
+*.clickhouse
+*.timescaledb
+migrations/
+
+# Storage Data
+data/
+storage/
+backups/
+archives/
+*.parquet
+*.avro
+*.orc
+*.arrow
+*.csv
+*.json
+*.dump
+*.snapshot
+
+# Documentation
+docs/_build/
+docs/generated/
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Database Specific
+# PostgreSQL
+postgresql/
+*.psql
+
+# MongoDB
+mongodb/
+*.mongodb
+
+# ClickHouse
+clickhouse/
+*.clickhouse
+
+# Elasticsearch
+elasticsearch/
+*.elastic
+
+# Cassandra
+cassandra/
+*.cql
+
+# InfluxDB
+influxdb/
+*.influxdb
+
+# TimescaleDB
+timescaledb/
+*.timescaledb
+
+# DuckDB
+duckdb/
+*.duckdb
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Metrics and Analytics
+metrics/
+analytics/
+reports/
+*.xlsx
+*.parquet
+
+# API Response Recordings
+tests/cassettes/
+*.yaml
+*.yml
+!pytest.ini
+
+# Credentials and Secrets
+credentials/
+secrets/
+*.key
+*.pem
+*.crt
+*.cer
+
+# Local Development
+local_settings.py
+instance/
+.instance/
+
+# Test Configuration
+test_config.json
+test_credentials.json
+
+# Storage Backend Specific
+backend_data/
+backend_config/
+*.backend

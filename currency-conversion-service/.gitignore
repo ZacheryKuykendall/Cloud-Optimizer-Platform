@@ -1,0 +1,129 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+
+# Distribution
+*.tar.gz
+*.whl
+
+# Logs
+*.log
+logs/
+conversion_logs/
+rate_logs/
+
+# Environment variables
+.env
+.env.*
+
+# API Keys and Credentials
+.forex/
+.ecb/
+.openexchange/
+*.apikey
+*_credentials.json
+credentials.yaml
+secrets.yaml
+
+# Documentation
+docs/_build/
+docs/generated/
+
+# Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Redis
+dump.rdb
+*.rdb
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+migrations/
+
+# Rate Data
+rate_data/
+exchange_rates/
+*.rates
+*.snapshot
+historical_rates/
+
+# Reports and Analytics
+reports/
+analytics/
+metrics/
+*.csv
+*.xlsx
+*.parquet
+
+# API Response Recordings
+tests/cassettes/
+*.yaml
+*.yml
+!pytest.ini
+
+# Credentials and Secrets
+credentials/
+secrets/
+*.key
+*.pem
+*.crt
+*.cer
+
+# Local Development
+local_settings.py
+instance/
+.instance/
+
+# Test Configuration
+test_config.json
+test_credentials.json
+
+# Provider-specific
+forex_cache/
+ecb_cache/
+openexchange_cache/
+custom_rates/
