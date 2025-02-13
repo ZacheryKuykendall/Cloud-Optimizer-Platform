@@ -1,4 +1,3 @@
-# Production-ready Dockerfile for cloud-cost-normalization service using multi-stage build
 FROM python:3.9-slim AS builder
 
 WORKDIR /app
@@ -9,11 +8,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Set default shell to bash
 SHELL ["/bin/bash", "-c"]
 
 # Copy project files and install dependencies
-COPY cloud-cost-normalization/pyproject.toml cloud-cost-normalization/poetry.lock* ./
+COPY resource-optimizer/pyproject.toml resource-optimizer/poetry.lock* ./
 RUN python3 -m venv .venv && \
     . .venv/bin/activate && \
     pip install --upgrade pip && \
@@ -22,19 +20,12 @@ RUN python3 -m venv .venv && \
     pip freeze > requirements.txt
 
 FROM python:3.9-slim
-
 WORKDIR /app
-
-# Copy requirements and install dependencies
 COPY --from=builder /app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
-COPY cloud-cost-normalization/ .
-
-# Set environment variables and expose port
+COPY resource-optimizer/ ./
 ENV PYTHON_ENV=development
 ENV APP_HOME=/app
 EXPOSE 8000
-
 CMD ["python", "main.py"]

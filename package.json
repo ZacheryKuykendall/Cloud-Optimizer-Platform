@@ -1,0 +1,14 @@
+{
+  "name": "cloud-optimizer-platform",
+  "version": "1.0.0",
+  "description": "A project to optimize cloud resources.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

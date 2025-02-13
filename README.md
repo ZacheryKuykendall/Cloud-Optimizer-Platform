@@ -1,6 +1,11 @@
 # Cloud Optimizer Platform
 
-A comprehensive cloud resource optimization and cost management platform that supports AWS, Azure, and GCP.
+A project to optimize cloud resources.
+
+- src/ contains the source code (an Express-based API server).
+- config/ contains configuration files.
+- cloud-cost-normalization/ houses a microservice with its own Dockerfile.
+- package.json contains project metadata.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -22,7 +27,7 @@ A comprehensive cloud resource optimization and cost management platform that su
 
 ## Overview
 
-The Cloud Optimizer Platform is a comprehensive solution for managing and optimizing cloud resources across multiple providers. It provides cost analysis, resource optimization, and cross-cloud networking capabilities.
+The Cloud Optimizer Platform integrates multiple microservices including a cost normalization service and a core API server built with Node.js/Express. It provides cost analysis, resource optimization, and cross-cloud networking capabilities.
 
 ### Key Features
 
@@ -63,27 +68,30 @@ cloud-optimizer/
 
 ## Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-org/cloud-optimizer.git
-cd cloud-optimizer
-```
+### Local Development
 
-2. Install dependencies:
+1. Install dependencies:
 ```bash
-# Install Python dependencies
-python -m pip install -r requirements.txt
-
-# Install Node.js dependencies
-cd cost-dashboard
 npm install
-cd ..
 ```
 
-3. Build and start services:
+2. Start the API server:
 ```bash
-docker-compose up -d
+npm start
 ```
+
+3. Visit http://localhost:3000 to verify the service is running.
+
+### Dockerized Services
+
+- To build & run the cloud-cost-normalization service:
+```bash
+cd cloud-cost-normalization
+docker build -t cloud-cost-normalization .
+docker run -p 8000:8000 cloud-cost-normalization
+```
+
+- Use docker-compose for orchestrated startups if provided.
 
 ## Configuration
 
@@ -392,3 +400,32 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+# Cloud Optimizer Platform
+
+## Building and Running
+
+### Prerequisites
+- Docker
+- Docker Compose
+
+### Build and Run
+```bash
+# Build all services
+docker-compose build
+
+# Start all services
+docker-compose up -d
+
+# Check service health
+curl http://localhost:8000/health  # API Gateway
+curl http://localhost:8001/health  # Cost Analyzer
+curl http://localhost:8002/health  # Resource Optimizer
+curl http://localhost:8003/health  # Cloud Cost Normalization
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```

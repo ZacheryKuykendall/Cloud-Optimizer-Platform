@@ -2,127 +2,84 @@ version: '3.8'
 
 services:
   api-gateway:
-    build: ./api-gateway-service
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
     ports:
-      - "8080:8080"
+      - "8000:8000"
     environment:
-      - NODE_ENV=development
+      - PYTHON_ENV=development
+      - COST_ANALYZER_SERVICE=http://cost-analyzer:8000
+      - RESOURCE_OPTIMIZER_SERVICE=http://resource-optimizer:8000
+      - CLOUD_COST_NORMALIZATION_SERVICE=http://cloud-cost-normalization:8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     depends_on:
-      - cost-normalizer
-      - network-manager
-      - cost-optimizer
+      - cost-analyzer
+      - resource-optimizer
+      - cloud-cost-normalization
 
-  cost-dashboard:
-    build: ./cost-dashboard
+  cost-analyzer:
+    build:
+      context: .
+      dockerfile: cost-analyzer/Dockerfile
+    environment:
+      - PYTHON_ENV=development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  resource-optimizer:
+    build:
+      context: .
+      dockerfile: resource-optimizer/Dockerfile
+    environment:
+      - PYTHON_ENV=development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  cloud-cost-normalization:
+    build:
+      context: .
+      dockerfile: cloud-cost-normalization/Dockerfile
+    environment:
+      - PYTHON_ENV=development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  cost-data-storage-service:
+    build:
+      context: .
+      dockerfile: cost-data-storage-service/Dockerfile
     ports:
-      - "3000:3000"
-    environment:
-      - REACT_APP_API_URL=http://localhost:8080
-    depends_on:
-      - api-gateway
+      - "8001:8001"
 
-  cost-normalizer:
-    build: ./cloud-cost-normalization
-    environment:
-      - PYTHONUNBUFFERED=1
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
-      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
-      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/credentials/gcp-key.json:ro
-
-  network-manager:
-    build: ./cloud-network-manager
-    environment:
-      - PYTHONUNBUFFERED=1
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
-      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
-      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/credentials/gcp-key.json:ro
-
-  cost-optimizer:
-    build: ./cloud-cost-optimizer
-    environment:
-      - PYTHONUNBUFFERED=1
-    depends_on:
-      - cost-normalizer
-
-  resource-inventory:
-    build: ./cloud-resource-inventory
-    environment:
-      - PYTHONUNBUFFERED=1
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
-      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
-      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/credentials/gcp-key.json:ro
-
-  budget-manager:
-    build: ./cloud-budget-manager
-    environment:
-      - PYTHONUNBUFFERED=1
-    depends_on:
-      - cost-normalizer
-      - resource-inventory
-
-  cost-storage:
-    build: ./cost-data-storage-service
-    environment:
-      - POSTGRES_USER=cloudoptimizer
-      - POSTGRES_PASSWORD=cloudoptimizer
-      - POSTGRES_DB=cloudoptimizer
-    volumes:
-      - cost-storage-data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:6-alpine
+  cloud-resource-inventory:
+    build:
+      context: .
+      dockerfile: cloud-resource-inventory/Dockerfile
     ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
+      - "8002:8002"
 
-  prometheus:
-    image: prom/prometheus:v2.30.3
+  cloud-network-manager:
+    build:
+      context: .
+      dockerfile: cloud-network-manager/Dockerfile
     ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./recording.rules.yml:/etc/prometheus/recording.rules.yml:ro
-      - ./alert.rules:/etc/prometheus/alert.rules:ro
-      - prometheus-data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-      - '--web.enable-lifecycle'
+      - "8003:8003"
 
-  grafana:
-    image: grafana/grafana:8.2.2
-    ports:
-      - "3001:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=cloudoptimizer
-    volumes:
-      - grafana-data:/var/lib/grafana
-    depends_on:
-      - prometheus
-
-volumes:
-  cost-storage-data:
-  redis-data:
-  prometheus-data:
-  grafana-data:
+networks:
+  default:
+    name: cloud-optimizer-network
+    driver: bridge
