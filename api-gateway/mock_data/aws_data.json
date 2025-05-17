@@ -1,0 +1,584 @@
+{
+  "resources": {
+    "ec2": [
+      {
+        "provider": "aws",
+        "type": "ec2",
+        "id": "i-0a1b2c3d4e5f6g7h8",
+        "name": "prod-web-server-01",
+        "size": "t3.large",
+        "state": "running",
+        "region": "us-east-1",
+        "launch_time": "2023-01-15T00:00:00Z",
+        "ip_address": "10.0.1.10",
+        "public_ip": "54.123.45.67",
+        "tags": {
+          "Environment": "Production",
+          "Role": "Web Server",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "ec2",
+        "id": "i-0b2c3d4e5f6g7h8i9",
+        "name": "prod-web-server-02",
+        "size": "t3.large",
+        "state": "running",
+        "region": "us-east-1",
+        "launch_time": "2023-01-15T00:00:00Z",
+        "ip_address": "10.0.1.11",
+        "public_ip": "54.123.45.68",
+        "tags": {
+          "Environment": "Production",
+          "Role": "Web Server",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "ec2",
+        "id": "i-0c3d4e5f6g7h8i9j0",
+        "name": "prod-api-server-01",
+        "size": "c5.2xlarge",
+        "state": "running",
+        "region": "us-east-1",
+        "launch_time": "2023-01-15T00:00:00Z",
+        "ip_address": "10.0.2.10",
+        "public_ip": "54.123.45.69",
+        "tags": {
+          "Environment": "Production",
+          "Role": "API Server",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "ec2",
+        "id": "i-0d4e5f6g7h8i9j0k1",
+        "name": "prod-db-server-01",
+        "size": "r5.2xlarge",
+        "state": "running",
+        "region": "us-east-1",
+        "launch_time": "2023-01-15T00:00:00Z",
+        "ip_address": "10.0.3.10",
+        "public_ip": null,
+        "tags": {
+          "Environment": "Production",
+          "Role": "Database Server",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "ec2",
+        "id": "i-0e5f6g7h8i9j0k1l2",
+        "name": "staging-web-server-01",
+        "size": "t3.medium",
+        "state": "running",
+        "region": "us-east-1",
+        "launch_time": "2023-01-20T00:00:00Z",
+        "ip_address": "10.0.4.10",
+        "public_ip": "54.123.45.70",
+        "tags": {
+          "Environment": "Staging",
+          "Role": "Web Server",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "ec2",
+        "id": "i-0f6g7h8i9j0k1l2m3",
+        "name": "staging-api-server-01",
+        "size": "c5.xlarge",
+        "state": "running",
+        "region": "us-east-1",
+        "launch_time": "2023-01-20T00:00:00Z",
+        "ip_address": "10.0.4.11",
+        "public_ip": "54.123.45.71",
+        "tags": {
+          "Environment": "Staging",
+          "Role": "API Server",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "ec2",
+        "id": "i-0g7h8i9j0k1l2m3n4",
+        "name": "dev-server-01",
+        "size": "t3.small",
+        "state": "stopped",
+        "region": "us-east-1",
+        "launch_time": "2023-02-01T00:00:00Z",
+        "ip_address": "10.0.5.10",
+        "public_ip": null,
+        "tags": {
+          "Environment": "Development",
+          "Role": "Development Server",
+          "Department": "Engineering"
+        }
+      }
+    ],
+    "s3": [
+      {
+        "provider": "aws",
+        "type": "s3",
+        "id": "company-production-assets",
+        "name": "company-production-assets",
+        "created": "2022-01-01T00:00:00Z",
+        "region": "us-east-1",
+        "size_gb": 532.45,
+        "object_count": 12567,
+        "tags": {
+          "Environment": "Production",
+          "Department": "Engineering",
+          "Purpose": "Application Assets"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "s3",
+        "id": "company-production-logs",
+        "name": "company-production-logs",
+        "created": "2022-01-01T00:00:00Z",
+        "region": "us-east-1",
+        "size_gb": 1254.78,
+        "object_count": 532890,
+        "tags": {
+          "Environment": "Production",
+          "Department": "Operations",
+          "Purpose": "Application Logs"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "s3",
+        "id": "company-production-backups",
+        "name": "company-production-backups",
+        "created": "2022-01-01T00:00:00Z",
+        "region": "us-west-2",
+        "size_gb": 2345.12,
+        "object_count": 8976,
+        "tags": {
+          "Environment": "Production",
+          "Department": "Operations",
+          "Purpose": "Database Backups"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "s3",
+        "id": "company-staging-assets",
+        "name": "company-staging-assets",
+        "created": "2022-01-15T00:00:00Z",
+        "region": "us-east-1",
+        "size_gb": 128.45,
+        "object_count": 5432,
+        "tags": {
+          "Environment": "Staging",
+          "Department": "Engineering",
+          "Purpose": "Application Assets"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "s3",
+        "id": "company-development",
+        "name": "company-development",
+        "created": "2022-02-01T00:00:00Z",
+        "region": "us-east-1",
+        "size_gb": 56.78,
+        "object_count": 2345,
+        "tags": {
+          "Environment": "Development",
+          "Department": "Engineering",
+          "Purpose": "Development"
+        }
+      }
+    ],
+    "rds": [
+      {
+        "provider": "aws",
+        "type": "rds",
+        "id": "prod-db-instance-01",
+        "name": "prod-db-instance-01",
+        "engine": "postgres",
+        "engine_version": "13.4",
+        "size": "db.r5.2xlarge",
+        "state": "available",
+        "region": "us-east-1",
+        "storage_gb": 500,
+        "multi_az": true,
+        "tags": {
+          "Environment": "Production",
+          "Role": "Primary Database",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "rds",
+        "id": "prod-db-instance-replica-01",
+        "name": "prod-db-instance-replica-01",
+        "engine": "postgres",
+        "engine_version": "13.4",
+        "size": "db.r5.2xlarge",
+        "state": "available",
+        "region": "us-east-1",
+        "storage_gb": 500,
+        "multi_az": false,
+        "tags": {
+          "Environment": "Production",
+          "Role": "Read Replica",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "aws",
+        "type": "rds",
+        "id": "staging-db-instance-01",
+        "name": "staging-db-instance-01",
+        "engine": "postgres",
+        "engine_version": "13.4",
+        "size": "db.r5.large",
+        "state": "available",
+        "region": "us-east-1",
+        "storage_gb": 200,
+        "multi_az": false,
+        "tags": {
+          "Environment": "Staging",
+          "Role": "Database",
+          "Department": "Engineering"
+        }
+      }
+    ]
+  },
+  "costs": {
+    "daily": [
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-04-01",
+        "end_date": "2023-04-02",
+        "amount": 156.78,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-04-02",
+        "end_date": "2023-04-03",
+        "amount": 155.43,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-04-03",
+        "end_date": "2023-04-04",
+        "amount": 158.21,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-04-04",
+        "end_date": "2023-04-05",
+        "amount": 157.34,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-04-05",
+        "end_date": "2023-04-06",
+        "amount": 156.29,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-04-06",
+        "end_date": "2023-04-07",
+        "amount": 155.87,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-04-07",
+        "end_date": "2023-04-08",
+        "amount": 154.92,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-04-01",
+        "end_date": "2023-04-02",
+        "amount": 45.67,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-04-02",
+        "end_date": "2023-04-03",
+        "amount": 46.12,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-04-03",
+        "end_date": "2023-04-04",
+        "amount": 45.89,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-04-04",
+        "end_date": "2023-04-05",
+        "amount": 46.34,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-04-05",
+        "end_date": "2023-04-06",
+        "amount": 47.01,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-04-06",
+        "end_date": "2023-04-07",
+        "amount": 46.78,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-04-07",
+        "end_date": "2023-04-08",
+        "amount": 46.23,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-04-01",
+        "end_date": "2023-04-02",
+        "amount": 87.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-04-02",
+        "end_date": "2023-04-03",
+        "amount": 87.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-04-03",
+        "end_date": "2023-04-04",
+        "amount": 87.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-04-04",
+        "end_date": "2023-04-05",
+        "amount": 87.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-04-05",
+        "end_date": "2023-04-06",
+        "amount": 87.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-04-06",
+        "end_date": "2023-04-07",
+        "amount": 87.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-04-07",
+        "end_date": "2023-04-08",
+        "amount": 87.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-04-01",
+        "end_date": "2023-04-02",
+        "amount": 12.34,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-04-02",
+        "end_date": "2023-04-03",
+        "amount": 11.98,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-04-03",
+        "end_date": "2023-04-04",
+        "amount": 12.56,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-04-04",
+        "end_date": "2023-04-05",
+        "amount": 13.01,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-04-05",
+        "end_date": "2023-04-06",
+        "amount": 12.78,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-04-06",
+        "end_date": "2023-04-07",
+        "amount": 12.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-04-07",
+        "end_date": "2023-04-08",
+        "amount": 12.10,
+        "currency": "USD"
+      }
+    ],
+    "monthly": [
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 4825.67,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 4356.78,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Elastic Compute Cloud",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 4789.23,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 1378.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 1256.78,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon Simple Storage Service",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 1345.67,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 2710.95,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 2450.6,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "Amazon RDS Service",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 2710.95,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 345.67,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 312.45,
+        "currency": "USD"
+      },
+      {
+        "provider": "aws",
+        "service": "AWS Lambda",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 356.78,
+        "currency": "USD"
+      }
+    ]
+  }
+} 

@@ -1,31 +1,27 @@
-FROM python:3.9-slim AS builder
-
-WORKDIR /app
-
-# Install system dependencies and clean up
-RUN apt-get update && \
-    apt-get install -y bash && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-SHELL ["/bin/bash", "-c"]
-
-# Copy project files and install dependencies
-COPY api-gateway/pyproject.toml api-gateway/poetry.lock* ./
-RUN python3 -m venv .venv && \
-    . .venv/bin/activate && \
-    pip install --upgrade pip && \
-    pip install poetry && \
-    poetry install --no-interaction --no-ansi && \
-    pip freeze > requirements.txt
-
 FROM python:3.9-slim
+
 WORKDIR /app
-COPY --from=builder /app/requirements.txt .
+
+# Copy requirements first for better layer caching
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY api-gateway/ ./
-ENV PYTHON_ENV=development
-ENV APP_HOME=/app
+# Copy the API Gateway code
+COPY api-gateway/ .
+
+# Copy the cloud_integrations.py file from the parent directory
+COPY cloud_integrations.py .
+
+# Ensure mock_data directory exists
+RUN mkdir -p mock_data
+
+# Expose the port
 EXPOSE 8000
-CMD ["python", "main.py"]
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV CLOUD_OPTIMIZER_SIMULATION=true
+ENV CLOUD_OPTIMIZER_FORCE_SIMULATION=true
+
+# Run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

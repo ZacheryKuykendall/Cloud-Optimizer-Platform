@@ -5,79 +5,49 @@ services:
     build:
       context: .
       dockerfile: api-gateway/Dockerfile
+    container_name: cloud-optimizer-api-gateway
     ports:
       - "8000:8000"
     environment:
-      - PYTHON_ENV=development
-      - COST_ANALYZER_SERVICE=http://cost-analyzer:8000
-      - RESOURCE_OPTIMIZER_SERVICE=http://resource-optimizer:8000
-      - CLOUD_COST_NORMALIZATION_SERVICE=http://cloud-cost-normalization:8000
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    depends_on:
-      - cost-analyzer
-      - resource-optimizer
-      - cloud-cost-normalization
-
-  cost-analyzer:
-    build:
-      context: .
-      dockerfile: cost-analyzer/Dockerfile
-    environment:
-      - PYTHON_ENV=development
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  resource-optimizer:
-    build:
-      context: .
-      dockerfile: resource-optimizer/Dockerfile
-    environment:
-      - PYTHON_ENV=development
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - CLOUD_OPTIMIZER_SIMULATION=true
+      - CLOUD_OPTIMIZER_FORCE_SIMULATION=true
+      - CLOUD_COST_NORMALIZATION_SERVICE=http://cloud-cost-normalization:8001
+    volumes:
+      - ./api-gateway:/app
+      - ./cloud_integrations.py:/app/cloud_integrations.py
+      - ./mock_data:/app/mock_data
+    restart: unless-stopped
 
   cloud-cost-normalization:
     build:
       context: .
       dockerfile: cloud-cost-normalization/Dockerfile
-    environment:
-      - PYTHON_ENV=development
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  cost-data-storage-service:
-    build:
-      context: .
-      dockerfile: cost-data-storage-service/Dockerfile
+    container_name: cloud-optimizer-cost-normalization
     ports:
       - "8001:8001"
+    environment:
+      - CLOUD_OPTIMIZER_SIMULATION=true
+      - CLOUD_OPTIMIZER_FORCE_SIMULATION=true
+    volumes:
+      - ./cloud-cost-normalization:/app
+      - ./cloud_integrations.py:/app/cloud_integrations.py
+      - ./mock_data:/app/mock_data
+    restart: unless-stopped
 
-  cloud-resource-inventory:
+  frontend:
     build:
-      context: .
-      dockerfile: cloud-resource-inventory/Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cloud-optimizer-frontend
     ports:
-      - "8002:8002"
-
-  cloud-network-manager:
-    build:
-      context: .
-      dockerfile: cloud-network-manager/Dockerfile
-    ports:
-      - "8003:8003"
+      - "80:80"
+    depends_on:
+      - api-gateway
+      - cloud-cost-normalization
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_COST_URL=http://localhost:8001
+    restart: unless-stopped
 
 networks:
   default:

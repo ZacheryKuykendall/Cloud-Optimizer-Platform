@@ -1,40 +1,27 @@
-# Production-ready Dockerfile for cloud-cost-normalization service using multi-stage build
-FROM python:3.9-slim AS builder
-
-WORKDIR /app
-
-# Install system dependencies and clean up
-RUN apt-get update && \
-    apt-get install -y bash && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Set default shell to bash
-SHELL ["/bin/bash", "-c"]
-
-# Copy project files and install dependencies
-COPY cloud-cost-normalization/pyproject.toml cloud-cost-normalization/poetry.lock* ./
-RUN python3 -m venv .venv && \
-    . .venv/bin/activate && \
-    pip install --upgrade pip && \
-    pip install poetry && \
-    poetry install --no-interaction --no-ansi && \
-    pip freeze > requirements.txt
-
 FROM python:3.9-slim
 
 WORKDIR /app
 
-# Copy requirements and install dependencies
-COPY --from=builder /app/requirements.txt .
+# Copy requirements first for better layer caching
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
+# Copy the Cloud Cost Normalization code
 COPY cloud-cost-normalization/ .
 
-# Set environment variables and expose port
-ENV PYTHON_ENV=development
-ENV APP_HOME=/app
-EXPOSE 8000
+# Copy the cloud_integrations.py file from the parent directory
+COPY cloud_integrations.py .
 
-CMD ["python", "main.py"]
+# Ensure mock_data directory exists
+RUN mkdir -p mock_data
+
+# Expose the port
+EXPOSE 8001
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV CLOUD_OPTIMIZER_SIMULATION=true
+ENV CLOUD_OPTIMIZER_FORCE_SIMULATION=true
+
+# Run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
