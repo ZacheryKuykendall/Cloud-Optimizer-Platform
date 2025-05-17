@@ -2,127 +2,54 @@ version: '3.8'
 
 services:
   api-gateway:
-    build: ./api-gateway-service
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    container_name: cloud-optimizer-api-gateway
     ports:
-      - "8080:8080"
+      - "8000:8000"
     environment:
-      - NODE_ENV=development
-    depends_on:
-      - cost-normalizer
-      - network-manager
-      - cost-optimizer
+      - CLOUD_OPTIMIZER_SIMULATION=true
+      - CLOUD_OPTIMIZER_FORCE_SIMULATION=true
+      - CLOUD_COST_NORMALIZATION_SERVICE=http://cloud-cost-normalization:8001
+    volumes:
+      - ./api-gateway:/app
+      - ./cloud_integrations.py:/app/cloud_integrations.py
+      - ./mock_data:/app/mock_data
+    restart: unless-stopped
 
-  cost-dashboard:
-    build: ./cost-dashboard
+  cloud-cost-normalization:
+    build:
+      context: .
+      dockerfile: cloud-cost-normalization/Dockerfile
+    container_name: cloud-optimizer-cost-normalization
     ports:
-      - "3000:3000"
+      - "8001:8001"
     environment:
-      - REACT_APP_API_URL=http://localhost:8080
+      - CLOUD_OPTIMIZER_SIMULATION=true
+      - CLOUD_OPTIMIZER_FORCE_SIMULATION=true
+    volumes:
+      - ./cloud-cost-normalization:/app
+      - ./cloud_integrations.py:/app/cloud_integrations.py
+      - ./mock_data:/app/mock_data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cloud-optimizer-frontend
+    ports:
+      - "80:80"
     depends_on:
       - api-gateway
-
-  cost-normalizer:
-    build: ./cloud-cost-normalization
+      - cloud-cost-normalization
     environment:
-      - PYTHONUNBUFFERED=1
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
-      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
-      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/credentials/gcp-key.json:ro
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_COST_URL=http://localhost:8001
+    restart: unless-stopped
 
-  network-manager:
-    build: ./cloud-network-manager
-    environment:
-      - PYTHONUNBUFFERED=1
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
-      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
-      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/credentials/gcp-key.json:ro
-
-  cost-optimizer:
-    build: ./cloud-cost-optimizer
-    environment:
-      - PYTHONUNBUFFERED=1
-    depends_on:
-      - cost-normalizer
-
-  resource-inventory:
-    build: ./cloud-resource-inventory
-    environment:
-      - PYTHONUNBUFFERED=1
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_REGION=${AWS_REGION}
-      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
-      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
-      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
-    volumes:
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/credentials/gcp-key.json:ro
-
-  budget-manager:
-    build: ./cloud-budget-manager
-    environment:
-      - PYTHONUNBUFFERED=1
-    depends_on:
-      - cost-normalizer
-      - resource-inventory
-
-  cost-storage:
-    build: ./cost-data-storage-service
-    environment:
-      - POSTGRES_USER=cloudoptimizer
-      - POSTGRES_PASSWORD=cloudoptimizer
-      - POSTGRES_DB=cloudoptimizer
-    volumes:
-      - cost-storage-data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:6-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-
-  prometheus:
-    image: prom/prometheus:v2.30.3
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./recording.rules.yml:/etc/prometheus/recording.rules.yml:ro
-      - ./alert.rules:/etc/prometheus/alert.rules:ro
-      - prometheus-data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-      - '--web.enable-lifecycle'
-
-  grafana:
-    image: grafana/grafana:8.2.2
-    ports:
-      - "3001:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=cloudoptimizer
-    volumes:
-      - grafana-data:/var/lib/grafana
-    depends_on:
-      - prometheus
-
-volumes:
-  cost-storage-data:
-  redis-data:
-  prometheus-data:
-  grafana-data:
+networks:
+  default:
+    name: cloud-optimizer-network
+    driver: bridge

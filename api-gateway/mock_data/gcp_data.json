@@ -1,0 +1,703 @@
+{
+  "resources": {
+    "compute": [
+      {
+        "provider": "gcp",
+        "type": "compute",
+        "id": "1234567890123456789",
+        "name": "prod-web-instance-1",
+        "size": "n1-standard-4",
+        "state": "RUNNING",
+        "zone": "us-central1-a",
+        "region": "us-central1",
+        "project": "my-production-project",
+        "machine_type": "n1-standard-4",
+        "cpu_platform": "Intel Haswell",
+        "public_ip": "35.224.45.123",
+        "private_ip": "10.128.0.2",
+        "tags": {
+          "environment": "production",
+          "application": "web"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "compute",
+        "id": "1234567890123456790",
+        "name": "prod-web-instance-2",
+        "size": "n1-standard-4",
+        "state": "RUNNING",
+        "zone": "us-central1-a",
+        "region": "us-central1",
+        "project": "my-production-project",
+        "machine_type": "n1-standard-4",
+        "cpu_platform": "Intel Haswell",
+        "public_ip": "35.224.45.124",
+        "private_ip": "10.128.0.3",
+        "tags": {
+          "environment": "production",
+          "application": "web"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "compute",
+        "id": "1234567890123456791",
+        "name": "prod-api-instance-1",
+        "size": "n1-standard-8",
+        "state": "RUNNING",
+        "zone": "us-central1-a",
+        "region": "us-central1",
+        "project": "my-production-project",
+        "machine_type": "n1-standard-8",
+        "cpu_platform": "Intel Haswell",
+        "public_ip": "35.224.45.125",
+        "private_ip": "10.128.0.4",
+        "tags": {
+          "environment": "production",
+          "application": "api"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "compute",
+        "id": "1234567890123456792",
+        "name": "staging-instance-1",
+        "size": "n1-standard-2",
+        "state": "RUNNING",
+        "zone": "us-west1-b",
+        "region": "us-west1",
+        "project": "my-staging-project",
+        "machine_type": "n1-standard-2",
+        "cpu_platform": "Intel Broadwell",
+        "public_ip": "34.102.78.123",
+        "private_ip": "10.138.0.2",
+        "tags": {
+          "environment": "staging",
+          "application": "web"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "compute",
+        "id": "1234567890123456793",
+        "name": "dev-instance-1",
+        "size": "n1-standard-1",
+        "state": "TERMINATED",
+        "zone": "us-west1-b",
+        "region": "us-west1",
+        "project": "my-development-project",
+        "machine_type": "n1-standard-1",
+        "cpu_platform": "Intel Broadwell",
+        "tags": {
+          "environment": "development",
+          "application": "test"
+        }
+      }
+    ],
+    "storage": [
+      {
+        "provider": "gcp",
+        "type": "storage",
+        "id": "my-production-project-assets",
+        "name": "my-production-project-assets",
+        "region": "us-central1",
+        "project": "my-production-project",
+        "storage_class": "STANDARD",
+        "size_gb": 234.56,
+        "object_count": 15678,
+        "tags": {
+          "environment": "production",
+          "purpose": "assets"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "storage",
+        "id": "my-production-project-logs",
+        "name": "my-production-project-logs",
+        "region": "us-central1",
+        "project": "my-production-project",
+        "storage_class": "NEARLINE",
+        "size_gb": 567.89,
+        "object_count": 45632,
+        "tags": {
+          "environment": "production",
+          "purpose": "logs"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "storage",
+        "id": "my-production-project-backups",
+        "name": "my-production-project-backups",
+        "region": "us-west1",
+        "project": "my-production-project",
+        "storage_class": "COLDLINE",
+        "size_gb": 789.12,
+        "object_count": 1234,
+        "tags": {
+          "environment": "production",
+          "purpose": "backups"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "storage",
+        "id": "my-staging-project-assets",
+        "name": "my-staging-project-assets",
+        "region": "us-west1",
+        "project": "my-staging-project",
+        "storage_class": "STANDARD",
+        "size_gb": 34.56,
+        "object_count": 2345,
+        "tags": {
+          "environment": "staging",
+          "purpose": "assets"
+        }
+      }
+    ],
+    "cloudsql": [
+      {
+        "provider": "gcp",
+        "type": "cloudsql",
+        "id": "my-production-project:us-central1:prod-sql-instance",
+        "name": "prod-sql-instance",
+        "zone": "us-central1-a",
+        "region": "us-central1",
+        "project": "my-production-project",
+        "database_version": "POSTGRES_13",
+        "tier": "db-custom-8-30720",
+        "size": "30",
+        "state": "RUNNABLE",
+        "storage_type": "SSD",
+        "tags": {
+          "environment": "production",
+          "application": "main-database"
+        }
+      },
+      {
+        "provider": "gcp",
+        "type": "cloudsql",
+        "id": "my-staging-project:us-west1:staging-sql-instance",
+        "name": "staging-sql-instance",
+        "zone": "us-west1-b",
+        "region": "us-west1",
+        "project": "my-staging-project",
+        "database_version": "POSTGRES_13",
+        "tier": "db-custom-2-7680",
+        "size": "10",
+        "state": "RUNNABLE",
+        "storage_type": "SSD",
+        "tags": {
+          "environment": "staging",
+          "application": "test-database"
+        }
+      }
+    ]
+  },
+  "costs": {
+    "daily": [
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-01",
+        "amount": 142.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-02",
+        "amount": 142.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-03",
+        "amount": 142.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-04",
+        "amount": 142.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-05",
+        "amount": 142.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-06",
+        "amount": 142.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-07",
+        "amount": 142.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-01",
+        "amount": 18.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-02",
+        "amount": 18.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-03",
+        "amount": 18.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-04",
+        "amount": 18.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-05",
+        "amount": 18.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-06",
+        "amount": 18.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "date": "2023-04-07",
+        "amount": 18.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-01",
+        "amount": 28.76,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-02",
+        "amount": 29.12,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-03",
+        "amount": 28.45,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-04",
+        "amount": 29.67,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-05",
+        "amount": 30.12,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-06",
+        "amount": 29.87,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-07",
+        "amount": 29.34,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-01",
+        "amount": 2.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-02",
+        "amount": 2.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-03",
+        "amount": 2.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-04",
+        "amount": 2.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-05",
+        "amount": 2.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-06",
+        "amount": 2.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "date": "2023-04-07",
+        "amount": 2.34,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-01",
+        "amount": 68.23,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-02",
+        "amount": 68.23,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-03",
+        "amount": 68.23,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-04",
+        "amount": 68.23,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-05",
+        "amount": 68.23,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-06",
+        "amount": 68.23,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-07",
+        "amount": 68.23,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-01",
+        "amount": 14.56,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-02",
+        "amount": 14.56,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-03",
+        "amount": 14.56,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-04",
+        "amount": 14.56,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-05",
+        "amount": 14.56,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-06",
+        "amount": 14.56,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "date": "2023-04-07",
+        "amount": 14.56,
+        "currency": "USD",
+        "project": "my-staging-project"
+      }
+    ],
+    "monthly": [
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 4270.20,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 3985.52,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 4270.20,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 550.20,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 513.52,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Compute Engine",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 550.20,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 890.56,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 815.36,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 876.54,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 72.54,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 65.52,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud Storage",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 70.20,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 2115.13,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 1909.95,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 2115.13,
+        "currency": "USD",
+        "project": "my-production-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 451.36,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 407.68,
+        "currency": "USD",
+        "project": "my-staging-project"
+      },
+      {
+        "provider": "gcp",
+        "service": "Cloud SQL",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 451.36,
+        "currency": "USD",
+        "project": "my-staging-project"
+      }
+    ]
+  }
+} 

@@ -6,8 +6,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the Cloud Cost Normalization code
-COPY cloud-cost-normalization/ .
+# Copy the API Gateway code
+COPY api-gateway/ .
 
 # Copy the cloud_integrations.py file from the parent directory
 COPY cloud_integrations.py .
@@ -16,7 +16,7 @@ COPY cloud_integrations.py .
 RUN mkdir -p mock_data
 
 # Expose the port
-EXPOSE 8001
+EXPOSE 8000
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -24,4 +24,4 @@ ENV CLOUD_OPTIMIZER_SIMULATION=true
 ENV CLOUD_OPTIMIZER_FORCE_SIMULATION=true
 
 # Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

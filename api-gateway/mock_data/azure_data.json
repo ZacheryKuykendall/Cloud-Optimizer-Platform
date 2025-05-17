@@ -1,0 +1,585 @@
+{
+  "resources": {
+    "vm": [
+      {
+        "provider": "azure",
+        "type": "vm",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prod-rg/providers/Microsoft.Compute/virtualMachines/prod-web-vm-01",
+        "name": "prod-web-vm-01",
+        "size": "Standard_D4s_v3",
+        "state": "running",
+        "location": "eastus",
+        "resource_group": "prod-rg",
+        "os_type": "Linux",
+        "os_name": "Ubuntu 20.04",
+        "tags": {
+          "Environment": "Production",
+          "Service": "WebApp"
+        }
+      },
+      {
+        "provider": "azure",
+        "type": "vm",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prod-rg/providers/Microsoft.Compute/virtualMachines/prod-api-vm-01",
+        "name": "prod-api-vm-01",
+        "size": "Standard_F8s_v2",
+        "state": "running",
+        "location": "eastus",
+        "resource_group": "prod-rg",
+        "os_type": "Linux",
+        "os_name": "Ubuntu 20.04",
+        "tags": {
+          "Environment": "Production",
+          "Service": "API"
+        }
+      },
+      {
+        "provider": "azure",
+        "type": "vm",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prod-rg/providers/Microsoft.Compute/virtualMachines/prod-db-vm-01",
+        "name": "prod-db-vm-01",
+        "size": "Standard_E8s_v3",
+        "state": "running",
+        "location": "eastus",
+        "resource_group": "prod-rg",
+        "os_type": "Linux",
+        "os_name": "Ubuntu 20.04",
+        "tags": {
+          "Environment": "Production",
+          "Service": "Database"
+        }
+      },
+      {
+        "provider": "azure",
+        "type": "vm",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/staging-rg/providers/Microsoft.Compute/virtualMachines/staging-web-vm-01",
+        "name": "staging-web-vm-01",
+        "size": "Standard_D2s_v3",
+        "state": "deallocated",
+        "location": "westeurope",
+        "resource_group": "staging-rg",
+        "os_type": "Linux",
+        "os_name": "Ubuntu 20.04",
+        "tags": {
+          "Environment": "Staging",
+          "Service": "WebApp"
+        }
+      },
+      {
+        "provider": "azure",
+        "type": "vm",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dev-rg/providers/Microsoft.Compute/virtualMachines/dev-vm-01",
+        "name": "dev-vm-01",
+        "size": "Standard_B2s",
+        "state": "running",
+        "location": "westeurope",
+        "resource_group": "dev-rg",
+        "os_type": "Linux",
+        "os_name": "Ubuntu 20.04",
+        "tags": {
+          "Environment": "Development",
+          "Service": "Test"
+        }
+      }
+    ],
+    "storage": [
+      {
+        "provider": "azure",
+        "type": "storage",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prod-rg/providers/Microsoft.Storage/storageAccounts/prodappassets",
+        "name": "prodappassets",
+        "kind": "StorageV2",
+        "sku": "Standard_LRS",
+        "location": "eastus",
+        "resource_group": "prod-rg",
+        "tags": {
+          "Environment": "Production",
+          "Department": "Engineering"
+        }
+      },
+      {
+        "provider": "azure",
+        "type": "storage",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prod-rg/providers/Microsoft.Storage/storageAccounts/prodapplogs",
+        "name": "prodapplogs",
+        "kind": "StorageV2",
+        "sku": "Standard_GRS",
+        "location": "eastus",
+        "resource_group": "prod-rg",
+        "tags": {
+          "Environment": "Production",
+          "Department": "Operations"
+        }
+      },
+      {
+        "provider": "azure",
+        "type": "storage",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prod-rg/providers/Microsoft.Storage/storageAccounts/prodappbackups",
+        "name": "prodappbackups",
+        "kind": "BlobStorage",
+        "sku": "Standard_RA-GRS",
+        "location": "westeurope",
+        "resource_group": "prod-rg",
+        "tags": {
+          "Environment": "Production",
+          "Department": "Operations"
+        }
+      }
+    ],
+    "sql": [
+      {
+        "provider": "azure",
+        "type": "sql",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prod-rg/providers/Microsoft.Sql/servers/prod-sql-server/databases/prod-main-db",
+        "name": "prod-main-db",
+        "server_name": "prod-sql-server",
+        "edition": "Premium",
+        "tier": "P2",
+        "status": "Online",
+        "location": "eastus",
+        "resource_group": "prod-rg",
+        "tags": {
+          "Environment": "Production",
+          "Service": "MainDatabase"
+        }
+      },
+      {
+        "provider": "azure",
+        "type": "sql",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/staging-rg/providers/Microsoft.Sql/servers/staging-sql-server/databases/staging-db",
+        "name": "staging-db",
+        "server_name": "staging-sql-server",
+        "edition": "Standard",
+        "tier": "S1",
+        "status": "Online",
+        "location": "westeurope",
+        "resource_group": "staging-rg",
+        "tags": {
+          "Environment": "Staging",
+          "Service": "TestDatabase"
+        }
+      }
+    ]
+  },
+  "costs": {
+    "daily": [
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-01",
+        "amount": 129.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-02",
+        "amount": 128.67,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-03",
+        "amount": 132.12,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-04",
+        "amount": 130.56,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-05",
+        "amount": 131.23,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-06",
+        "amount": 127.89,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-07",
+        "amount": 125.67,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-01",
+        "amount": 12.34,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-02",
+        "amount": 12.34,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-03",
+        "amount": 12.34,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-04",
+        "amount": 12.34,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-05",
+        "amount": 12.34,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-06",
+        "amount": 12.34,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "date": "2023-04-07",
+        "amount": 12.34,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "date": "2023-04-01",
+        "amount": 36.78,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "date": "2023-04-02",
+        "amount": 37.12,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "date": "2023-04-03",
+        "amount": 36.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "date": "2023-04-04",
+        "amount": 38.23,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "date": "2023-04-05",
+        "amount": 37.56,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "date": "2023-04-06",
+        "amount": 36.89,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "date": "2023-04-07",
+        "amount": 36.12,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-01",
+        "amount": 76.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-02",
+        "amount": 76.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-03",
+        "amount": 76.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-04",
+        "amount": 76.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-05",
+        "amount": 76.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-06",
+        "amount": 76.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-07",
+        "amount": 76.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-01",
+        "amount": 16.78,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-02",
+        "amount": 16.78,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-03",
+        "amount": 16.78,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-04",
+        "amount": 16.78,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-05",
+        "amount": 16.78,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-06",
+        "amount": 16.78,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "date": "2023-04-07",
+        "amount": 16.78,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      }
+    ],
+    "monthly": [
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 3867.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 3578.12,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 3912.67,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 345.67,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 345.67,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Virtual Machines",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 345.67,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 976.45,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 1034.78,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Storage",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 1089.23,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 2293.5,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 2140.6,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 2293.5,
+        "currency": "USD",
+        "resource_group": "prod-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "start_date": "2023-01-01",
+        "end_date": "2023-02-01",
+        "amount": 503.4,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "start_date": "2023-02-01",
+        "end_date": "2023-03-01",
+        "amount": 469.84,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      },
+      {
+        "provider": "azure",
+        "service": "Azure SQL Database",
+        "start_date": "2023-03-01",
+        "end_date": "2023-04-01",
+        "amount": 503.4,
+        "currency": "USD",
+        "resource_group": "staging-rg"
+      }
+    ]
+  }
+} 
